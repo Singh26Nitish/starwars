@@ -1,52 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import CategoryButtons from './components/CategoryButtons';
-import DisplayData from './components/DisplayData';
+// App.js
+import React from 'react';
+import CategorySection from './components/CategorySection';
+import backgroundImage from './media/starwars.jpg';
+import Navbar from './components/Navbar';
 
 function App() {
-  const [data, setData] = useState(null);
-  const [selectedData, setSelectedData] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const appStyle = {
 
-  useEffect(() => {
-    fetch('https://swapi.dev/api/')
-      .then(response => response.json())
-      .then(json => setData(json))
-      .catch(error => console.error(error));
-  }, []);
-
-  const handleButtonClick = async (key) => {
-    try {
-      setLoading(true);
-      const response = await fetch(data[key]);
-      const jsonData = await response.json();
-      setSelectedCategory(key);
-
-      // Extract all items from the results array
-      const itemsToShow = jsonData.results.slice(0, 9);
-      setSelectedData(itemsToShow);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    minHeight: '100vh', // Ensures the background covers the entire viewport height
   };
 
   return (
-    <div className="container mx-auto p-8 text-center">
-      <h1 className="text-3xl font-semibold mb-4">Star Wars Data Explorer</h1>
-      <CategoryButtons data={data} handleButtonClick={handleButtonClick} />
-      <h2 className="text-xl font-semibold mt-4">
-        Selected Category: {selectedCategory}
-      </h2>
-      {loading ? (
-        <p className="mt-8">Loading...</p>
-      ) : (
-        <DisplayData
-          selectedCategory={selectedCategory}
-          selectedData={selectedData}
-        />
-      )}
+    <div className="App" style={appStyle}>
+      <Navbar />
+      <CategorySection />
     </div>
   );
 }
