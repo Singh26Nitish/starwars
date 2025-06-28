@@ -17,7 +17,7 @@ function CategorySection({ updateBackground }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    fetch('https://swapi.dev/api/')
+    fetch('https://swapi.py4e.com/api/')
       .then(response => response.json())
       .then(json => setData(json))
       .catch(error => console.error(error));
